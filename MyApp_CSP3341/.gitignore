@@ -1,0 +1,31 @@
+# Build outputs
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio and per-user settings
+.vs/
+*.user
+*.userosscache
+*.suo
+*.rsuser
+
+# JetBrains Rider / IntelliJ IDEA
+.idea/
+*.sln.iml
+
+# Test and coverage output
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local environment files and secrets
+.env
+.env.*
+appsettings.Local.json
+secrets.json
