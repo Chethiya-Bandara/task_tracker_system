@@ -1,54 +1,63 @@
-﻿@model List<TaskTracker.Models.TaskItem>
+@model List<TaskTracker.Models.TaskItem>
 
 @{
     ViewData["Title"] = "My Tasks";
 }
 
-<h2>My Tasks</h2>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">My Tasks</h2>
+    <a asp-controller="Tasks" asp-action="Create" class="btn btn-primary">Add New Task</a>
+</div>
 
-<a asp-controller="Tasks"
-   asp-action="Create"
-   class="btn btn-primary mb-3">
-    Add New Task
-</a>
+@if (TempData["ErrorMessage"] is string errorMessage)
+{
+    <div class="alert alert-danger" role="alert">@errorMessage</div>
+}
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Priority</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<form asp-action="Index" method="get" class="card card-body bg-light border-0 mb-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-4">
+            <label for="priority" class="form-label">Priority</label>
+            <select id="priority" name="priority" class="form-select">
+                <option value="">All priorities</option>
+                <option value="Low" selected="@(ViewData["SelectedPriority"]?.ToString() == "Low")">Low</option>
+                <option value="Medium" selected="@(ViewData["SelectedPriority"]?.ToString() == "Medium")">Medium</option>
+                <option value="High" selected="@(ViewData["SelectedPriority"]?.ToString() == "High")">High</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="dueDate" class="form-label">Due date</label>
+            <input id="dueDate" name="dueDate" type="date" class="form-control" value="@ViewData["SelectedDueDate"]" />
+        </div>
+        <div class="col-md-auto d-flex gap-2">
+            <button type="submit" class="btn btn-outline-primary">Filter Tasks</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Clear</a>
+        </div>
+    </div>
+</form>
 
-    <tbody>
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No tasks match the selected filters.</div>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead><tr><th>Title</th><th>Priority</th><th>Due Date</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody>
         @foreach (var task in Model)
         {
             <tr>
                 <td>@task.Title</td>
                 <td>@task.Priority</td>
+                <td>@(task.DueDate?.ToString("dd MMM yyyy") ?? "—")</td>
+                <td>@(task.IsCompleted ? "Completed" : "Pending")</td>
                 <td>
-                    @(task.IsCompleted ? "Completed" : "Pending")
-                </td>
-                <td>
-                    <a asp-action="Edit"
-                       asp-route-id="@task.Id"
-                       class="btn btn-sm btn-warning">
-                        Edit
-                    </a>
-
-                    <form asp-action="Delete"
-                          asp-route-id="@task.Id"
-                          method="post"
-                          class="d-inline">
-                        <button type="submit"
-                                class="btn btn-sm btn-danger">
-                            Delete
-                        </button>
-                    </form>
+                    <a asp-action="Edit" asp-route-id="@task.Id" class="btn btn-sm btn-warning">Edit</a>
+                    <form asp-action="Delete" asp-route-id="@task.Id" method="post" class="d-inline"><button type="submit" class="btn btn-sm btn-danger">Delete</button></form>
                 </td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}

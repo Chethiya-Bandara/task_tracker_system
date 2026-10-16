@@ -15,6 +15,10 @@ namespace TaskTracker.Models
         [Required]
         public string Priority { get; set; } = "Medium";
 
+        [Display(Name = "Due date")]
+        [DataType(DataType.Date)]
+        public DateOnly? DueDate { get; set; }
+
         public bool IsCompleted { get; set; } = false;
     }
 }

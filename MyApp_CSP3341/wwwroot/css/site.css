@@ -21,6 +21,14 @@ body {
   margin-bottom: 60px;
 }
 
+.landing-hero {
+  background: linear-gradient(135deg, #e7f1ff, #f4f0ff);
+}
+
+.landing-hero .lead {
+  max-width: 700px;
+}
+
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
   color: var(--bs-secondary-color);
   text-align: end;

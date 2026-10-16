@@ -35,6 +35,12 @@
         </select>
     </div>
 
+    <div class="mb-3">
+        <label asp-for="DueDate"></label>
+        <input asp-for="DueDate" type="date" class="form-control" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="DueDate" class="text-danger"></span>
+    </div>
+
     <div class="form-check mb-3">
         <input asp-for="IsCompleted"
                class="form-check-input" />

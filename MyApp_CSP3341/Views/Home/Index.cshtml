@@ -1,17 +1,25 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "TaskTracker";
 }
 
-<div class="text-center mt-5">
-    <h1 class="display-4">Welcome to Task Manager</h1>
+<section class="landing-hero text-center rounded-4 p-5 mt-4 mb-5">
+    <p class="text-uppercase fw-semibold small mb-2">Your day, organised</p>
+    <h1 class="display-4 fw-bold">Make every task feel manageable.</h1>
+    <p class="lead mx-auto mt-3 mb-4">TaskTracker gives you one calm, clear place to plan work, set priorities, and never miss an important due date.</p>
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+        <a asp-controller="Tasks" asp-action="Index" class="btn btn-primary btn-lg px-4">View Tasks</a>
+        <a asp-controller="Tasks" asp-action="Create" class="btn btn-outline-primary btn-lg px-4">Add a Task</a>
+    </div>
+</section>
 
-    <p class="lead">
-        Manage your tasks efficiently.
-    </p>
+<section class="row g-4 mb-5">
+    <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><h2 class="h4">Capture what matters</h2><p class="mb-0 text-secondary">Keep task names, details, and priorities together so the next step is always clear.</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><h2 class="h4">Plan with confidence</h2><p class="mb-0 text-secondary">Set a due date for every deadline and focus on work that needs your attention first.</p></div></div></div>
+    <div class="col-md-4"><div class="card h-100 border-0 shadow-sm"><div class="card-body p-4"><h2 class="h4">Stay focused</h2><p class="mb-0 text-secondary">Filter your list by priority or due date, then mark tasks complete as you make progress.</p></div></div></div>
+</section>
 
-    <a asp-controller="Tasks"
-       asp-action="Index"
-       class="btn btn-primary btn-lg mt-3">
-        View Tasks
-    </a>
-</div>
+<section class="text-center border-top pt-5 mb-4">
+    <h2 class="h3">Ready to get started?</h2>
+    <p class="text-secondary">Create your first task and turn your plan into progress.</p>
+    <a asp-controller="Tasks" asp-action="Create" class="btn btn-success">Create a Task</a>
+</section>
