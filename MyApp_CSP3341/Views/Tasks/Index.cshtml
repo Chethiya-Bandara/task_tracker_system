@@ -1,0 +1,54 @@
+﻿@model List<TaskTracker.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "My Tasks";
+}
+
+<h2>My Tasks</h2>
+
+<a asp-controller="Tasks"
+   asp-action="Create"
+   class="btn btn-primary mb-3">
+    Add New Task
+</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.Title</td>
+                <td>@task.Priority</td>
+                <td>
+                    @(task.IsCompleted ? "Completed" : "Pending")
+                </td>
+                <td>
+                    <a asp-action="Edit"
+                       asp-route-id="@task.Id"
+                       class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+
+                    <form asp-action="Delete"
+                          asp-route-id="@task.Id"
+                          method="post"
+                          class="d-inline">
+                        <button type="submit"
+                                class="btn btn-sm btn-danger">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
