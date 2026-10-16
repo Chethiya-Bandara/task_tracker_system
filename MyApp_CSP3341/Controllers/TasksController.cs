@@ -2,17 +2,23 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskTracker.Models;
 
+using TaskTracker.Data;
+
 namespace TaskTracker.Controllers
 {
     public class TasksController : Controller
     {
-        private static List<TaskItem> tasks = new();
-        private static int nextId = 1;
+        private readonly AppDbContext _context;
+
+        public TasksController(AppDbContext context)
+        {
+            _context = context;
+        }
 
         // GET Tasks
         public IActionResult Index()
         {
-            return View(tasks);
+            return View(_context.Tasks.ToList());
         }
 
         // GET Tasks Create
@@ -29,8 +35,8 @@ namespace TaskTracker.Controllers
             if (!ModelState.IsValid)
                 return View(task);
 
-            task.Id = nextId++;
-            tasks.Add(task);
+            _context.Tasks.Add(task);
+            _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }
@@ -38,7 +44,7 @@ namespace TaskTracker.Controllers
         // GET Tasks Edit
         public IActionResult Edit(int id)
         {
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = _context.Tasks.Find(id);
 
             if (task == null)
                 return NotFound();
@@ -54,7 +60,7 @@ namespace TaskTracker.Controllers
             if (!ModelState.IsValid)
                 return View(updated);
 
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = _context.Tasks.Find(id);
 
             if (task == null)
                 return NotFound();
@@ -64,6 +70,8 @@ namespace TaskTracker.Controllers
             task.Priority = updated.Priority;
             task.IsCompleted = updated.IsCompleted;
 
+            _context.SaveChanges();
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -72,12 +80,13 @@ namespace TaskTracker.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
-            var task = tasks.FirstOrDefault(t => t.Id == id);
+            var task = _context.Tasks.Find(id);
 
             if (task == null)
                 return NotFound();
 
-            tasks.Remove(task);
+            _context.Tasks.Remove(task);
+            _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }

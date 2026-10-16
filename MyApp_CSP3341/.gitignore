@@ -29,3 +29,8 @@ Desktop.ini
 .env.*
 appsettings.Local.json
 secrets.json
+
+# Local SQLite database
+tasktracker.db
+tasktracker.db-shm
+tasktracker.db-wal
